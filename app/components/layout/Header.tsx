@@ -7,19 +7,21 @@ import Link from 'next/link'
 import ThemeToggle from './ThemeToggle'
 import { LocateFixed, Search } from 'lucide-react'
 import type { HeaderProps } from '@/app/lib/types'
+import toast from 'react-hot-toast'
 
 const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) => {
     const [query, setQuery] = React.useState('')
     const [isSearching, setIsSearching] = React.useState(false)
     const [isLocating, setIsLocating] = React.useState(false)
-    const [error, setError] = React.useState('')
 
     const searchLocation = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        if (!query.trim()) return
+        if (!query.trim()) {
+            toast.error('Enter a city or place to search.')
+            return
+        }
 
         setIsSearching(true)
-        setError('')
 
         try {
             const response = await fetch(`/api/geocode?query=${encodeURIComponent(query)}`)
@@ -28,7 +30,7 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
             if (!response.ok) throw new Error(data.error || 'Location not found.')
             onLocationFound?.(data)
         } catch (searchError) {
-            setError(searchError instanceof Error ? searchError.message : 'Location search failed.')
+            toast.error(searchError instanceof Error ? searchError.message : 'Location search failed.')
         } finally {
             setIsSearching(false)
         }
@@ -36,12 +38,12 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
 
     const useCurrentLocation = () => {
         if (!navigator.geolocation) {
-            setError('Geolocation is not supported by your browser.')
+            const message = 'Geolocation is not supported by your browser.'
+            toast.error(message)
             return
         }
 
         setIsLocating(true)
-        setError('')
 
         navigator.geolocation.getCurrentPosition(
             async (position) => {
@@ -52,7 +54,8 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
                     if (!response.ok) throw new Error(data.error || 'Could not find your location.')
                     onLocationFound?.(data)
                 } catch (locateError) {
-                    setError(locateError instanceof Error ? locateError.message : 'Location lookup failed.')
+                    const message = locateError instanceof Error ? locateError.message : 'Location lookup failed.'
+                    toast.error(message)
                 } finally {
                     setIsLocating(false)
                 }
@@ -63,7 +66,8 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
                     2: 'Your location could not be determined. Check your device location settings.',
                     3: 'Location detection timed out. Try again.',
                 }
-                setError(messages[positionError.code] || 'Location detection failed.')
+                const message = messages[positionError.code] || 'Location detection failed.'
+                toast.error(message)
                 setIsLocating(false)
             },
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 }
@@ -74,7 +78,7 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
         <header className="w-full mx-auto max-w-7xl px-4 py-4">
             <nav className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <Link href="/" className="flex items-center self-start mr-auto">
-                    <Image src={Images.logo} alt="Logo" width={52} height={52} className="h-13 w-13" />
+                    <Image src={Images.logo} alt="WeathCast logo" width={52} height={52} priority className="h-13 w-13" />
                     <div className="ml-2 flex flex-col font-semibold">
                         <span className="text-xl text-[#FF6D00]">
                             <span className='text-[#3AA8F6]'>Weath</span>
@@ -104,7 +108,6 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
                                     placeholder="Search for your preferred city..."
                                     className="bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground w-full h-full px-3 sm:px-4"
                                 />
-                                {error && <span className="absolute top-full left-4 mt-1 text-xs text-red-600">{error}</span>}
                                 {isSearching && <span className="sr-only">Searching</span>}
                             </form>
                         </div>

@@ -4,6 +4,20 @@ import React, { useEffect, useRef, useState } from 'react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import HourCard from './HourCard'
 import type { HourlyForecastProps } from '@/app/lib/types'
+import { Skeleton } from '@/components/ui/skeleton'
+
+export const HourlyForecastSkeleton = () => (
+    <div className='w-full lg:max-w-xl xl:max-w-3xl py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
+        <div className="flex items-center justify-between gap-3">
+            <Skeleton className="h-10 w-10 rounded-full" />
+            <Skeleton className="h-10 w-56" />
+            <Skeleton className="h-10 w-10 rounded-full" />
+        </div>
+        <div className="mt-3 flex gap-3 overflow-hidden pb-2">
+            {Array.from({ length: 3 }, (_, index) => <Skeleton key={index} className="h-67.5 min-w-0 flex-1 rounded-[25px]" />)}
+        </div>
+    </div>
+)
 
 const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
     const [activeIndex, setActiveIndex] = useState(0)
@@ -23,7 +37,7 @@ const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
             }).formatToParts(now)
             const part = (type: Intl.DateTimeFormatPartTypes) => parts.find(({ type: partType }) => partType === type)?.value
             const currentHour = `${part('year')}-${part('month')}-${part('day')} ${part('hour')}`
-            const currentIndex = visibleHours.findIndex((hour) => hour.time.startsWith(currentHour))
+            const currentIndex = hourly.slice(0, 24).findIndex((hour) => hour.time.startsWith(currentHour))
 
             if (currentIndex >= 0) setActiveIndex(currentIndex)
         }
@@ -36,6 +50,8 @@ const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
     useEffect(() => {
         cardRefs.current[activeIndex]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' })
     }, [activeIndex])
+
+    if (visibleHours.length === 0) return <HourlyForecastSkeleton />
 
     const moveSlider = (direction: -1 | 1) => {
         setActiveIndex((index) => Math.min(Math.max(index + direction, 0), visibleHours.length - 1))

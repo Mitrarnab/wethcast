@@ -9,6 +9,9 @@ import Forcast from "./components/layout/Forcast/Forcast";
 import type { MapLocation, TemperatureUnit, WeatherData } from "./lib/types";
 import TomorrowData from "./components/layout/TomorrowData/TomorrowData";
 import HourlyForcast from "./components/layout/HourlyForcast/HourlyForcast";
+import { ForecastSkeleton } from "./components/layout/Forcast/Forcast";
+import { HourlyForecastSkeleton } from "./components/layout/HourlyForcast/HourlyForcast";
+import { TomorrowSkeleton } from "./components/layout/TomorrowData/TomorrowData";
 
 export default function Home() {
   const [location, setLocation] = useState<MapLocation | null>(null);
@@ -51,17 +54,21 @@ export default function Home() {
       });
   }, [location]);
 
+  const weatherForLocation = weather?.location.lat === location?.latitude && weather?.location.lon === location?.longitude
+    ? weather
+    : null;
+
   return (
     <>
       <Header onLocationFound={setLocation} />
       <main className="px-4 lg:px-2">
         <section className="flex flex-col-reverse lg:flex-row max-w-7xl mx-auto gap-6 lg:gap-12.5 items-stretch">
           <TimeMap location={location} />
-          {weather !== null && <Forcast {...weather.current} unit={unit} onUnitChange={setUnit} />}
+          {weatherForLocation !== null ? <Forcast {...weatherForLocation.current} unit={unit} onUnitChange={setUnit} /> : <ForecastSkeleton />}
         </section>
         <section className="flex flex-col my-6 lg:my-12.5 lg:flex-row max-w-7xl mx-auto gap-6 lg:gap-12.5 items-stretch">
-          <HourlyForcast hourly={weather?.hourly ?? []} timezone={location?.timezone} unit={unit} />
-          <TomorrowData {...weather?.tomorrow} unit={unit} />
+          {weatherForLocation !== null ? <HourlyForcast hourly={weatherForLocation.hourly} timezone={location?.timezone} unit={unit} /> : <HourlyForecastSkeleton />}
+          {weatherForLocation !== null ? <TomorrowData {...weatherForLocation.tomorrow} unit={unit} /> : <TomorrowSkeleton />}
         </section>
       </main>
       <Footer />

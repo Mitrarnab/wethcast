@@ -2,6 +2,7 @@
 
 import React from 'react'
 import type { TimeMapProps } from '@/app/lib/types'
+import { Skeleton } from '@/components/ui/skeleton'
 
 const TimeMap = ({ location }: TimeMapProps) => {
     const [now, setNow] = React.useState(new Date())
@@ -38,16 +39,14 @@ const TimeMap = ({ location }: TimeMapProps) => {
         <div className="flex flex-col lg:max-w-md w-full py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]">
             <div className="flex justify-around items-center mb-4">
                 <div className="">
-                    <h1 className="text-2xl font-bold text-center truncate">
-                        {primaryName?.trim() || 'Search a city'}
-                    </h1>
+                    {location ? <h1 className="text-2xl font-bold text-center truncate">{primaryName?.trim()}</h1> : <Skeleton className="mx-auto h-8 w-40" />}
                     {secondaryName && (
                         <span className="block text-xs text-center text-muted-foreground truncate">
                             {secondaryName}
                         </span>
                     )}
                 </div>
-                {location && (
+                {location ? (
                     <div className="flex flex-col justify-center items-center">
                         <button
                             type="button"
@@ -60,7 +59,7 @@ const TimeMap = ({ location }: TimeMapProps) => {
                         </button>
                         <span>{dateString}</span>
                     </div>
-                )}
+                ) : <Skeleton className="h-16 w-32" />}
             </div>
             {location ? (
                 <iframe
@@ -70,11 +69,7 @@ const TimeMap = ({ location }: TimeMapProps) => {
                     loading="lazy"
                     allowFullScreen
                 />
-            ) : (
-                <div className="flex items-center justify-center bg-muted w-full h-40 rounded-[10px] text-muted-foreground">
-                    Search for a location to load its map
-                </div>
-            )}
+            ) : <Skeleton className="h-60 w-full rounded-[10px]" />}
         </div>
     )
 }
