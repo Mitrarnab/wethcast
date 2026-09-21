@@ -1,0 +1,94 @@
+"use client"
+
+import Image from "next/image"
+import { Images } from '@/app/lib/constants'
+import TemparatureToggler from '@/app/components/ui/TemparatureToggler'
+import type { ForecastProps, TemperatureUnit } from '@/app/lib/types'
+
+type ForcastProps = ForecastProps & {
+    unit: TemperatureUnit
+    onUnitChange: (unit: TemperatureUnit) => void
+}
+
+const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, feelslike_c, feelslike_f, sunrise, sunset, pressure, uv, weather_code, unit, onUnitChange }: ForcastProps) => {
+    const weatherIcon = `/icons/sky/${weather_code}${is_day}.png`
+
+    return (
+        <div className=' w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
+            <div className="md:col-start-1 md:col-end-3 xl:col-end-2 grid grid-cols-1 md:grid-cols-2 xl:block">
+                <div className="mb-4 flex flex-col items-center text-center md:items-start md:text-start md:mb-0">
+                    <div className="flex items-start flex-col">
+                        <TemparatureToggler unit={unit} onToggle={onUnitChange} />
+                        <h2 className="text-[70px] font-bold tracking-tight">
+                            {unit == 'C' ? temp_c : temp_f}°{unit}
+                        </h2>
+                    </div>
+                    <h3 className="text-[20px] font-bold -mt-5">Feels Like  <span className="text-[32px] font-bold">{unit == 'C' ? feelslike_c : feelslike_f}°{unit}</span></h3>
+                </div>
+                <div className="grid grid-cols-2 text-center gap-1 xl:grid-cols-1">
+                    <div className=" text-center xl:text-start xl:flex xl:flex-row xl:items-center xl:mt-6.5 xl:gap-2">
+                        <Image src={Images.sunrise} width={48} height={48} alt="sunrise icon" className="mx-auto xl:mx-0 filter invert dark:invert-0" />
+                        <div>
+                            <h4 className="font-bold text-[20px]">Sunrise</h4>
+                            {sunrise ?? "--:-- AM"}
+                        </div>
+                    </div>
+                    <div className=" text-center xl:text-start xl:flex xl:flex-row xl:items-center xl:mt-3 xl:gap-2">
+                        <Image src={Images.sunset} width={48} height={48} alt="sunset icon" className="mx-auto xl:mx-0 filter invert dark:invert-0" />
+                        <div>
+                            <h4 className="font-bold text-[20px]">Sunset</h4>
+                            {sunset ?? "--:-- PM"}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="row-start-1 md:row-start-2 xl:row-auto text-center">
+                <Image
+                    src={weatherIcon}
+                    width={270}
+                    height={270}
+                    alt={condition}
+                    className="mx-auto mb-2.5"
+                    onError={(event) => {
+                        event.currentTarget.src = Images.sunny;
+                    }}
+                />
+                <div className="text-[32px] font-bold">{condition}</div>
+            </div>
+            <div className="grid grid-cols-2 gap-1">
+                <div className="text-center">
+                    <Image src={Images.humidity} width={58} height={58} alt="humidity icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <div className="">
+                        <h4 className="font-bold text-[20px]">{humidity}%</h4>
+                        Humidity
+                    </div>
+                </div>
+                <div className="text-center">
+                    <Image src={Images.speed} width={58} height={58} alt="speed icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <div className="">
+                        <h4 className="font-bold text-[20px]">{wind_speed_10m}km/h</h4>
+                        Wind Speed
+                    </div>
+                </div>
+
+                <div className="text-center">
+                    <Image src={Images.pressure} width={58} height={58} alt="pressure icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <div className="">
+                        <h4 className="font-bold text-[20px]">{pressure}hPa</h4>
+                        Pressure
+                    </div>
+                </div>
+
+                <div className="text-center">
+                    <Image src={Images.uv} width={58} height={58} alt="uv icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <div className="">
+                        <h4 className="font-bold text-[20px]">{uv}</h4>
+                        uv
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default Forcast
