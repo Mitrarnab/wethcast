@@ -13,6 +13,10 @@ const poppins = Poppins({
 export const metadata: Metadata = {
   metadataBase: new URL("https://weathcastbyarnab.vercel.app/"),
 
+  verification: {
+    google: process.env.GOOGLE_SITE_VERIFICATION,
+  },
+
   title: {
     default: "WeathCast – Local Weather Forecast & Live Weather",
     template: "%s | WeathCast",
