@@ -9,7 +9,7 @@ const TemparatureToggler = ({ unit, onToggle }: TemperatureTogglerProps) => {
     const options: TemperatureUnit[] = ['C', 'F']
 
     return (
-        <div className="inline-flex -mb-3.5 items-center rounded-full  bg-slate-200/90 p-1 shadow-inner ring-1 ring-black/5 dark:bg-slate-700 dark:ring-white/10">
+        <div role="group" aria-label="Temperature unit" className="inline-flex -mb-3.5 items-center rounded-full  bg-slate-200/90 p-1 shadow-inner ring-1 ring-black/5 dark:bg-slate-700 dark:ring-white/10">
             {options.map((option) => {
                 const active = unit === option
 

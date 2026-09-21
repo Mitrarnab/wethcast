@@ -36,7 +36,7 @@ const TimeMap = ({ location }: TimeMapProps) => {
     const secondaryName = restParts.join(',').trim()
 
     return (
-        <div className="flex flex-col lg:max-w-md w-full py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]">
+        <section aria-label={location ? `Local time and map for ${location.name}` : 'Local time and map'} className="flex flex-col lg:max-w-md w-full py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]">
             <div className="flex justify-around items-center mb-4">
                 <div className="">
                     {location ? <h1 className="text-2xl font-bold text-center truncate">{primaryName?.trim()}</h1> : <Skeleton className="mx-auto h-8 w-40" />}
@@ -53,6 +53,7 @@ const TimeMap = ({ location }: TimeMapProps) => {
                             className="cursor-pointer text-4xl font-bold"
                             onClick={() => setIs24Hour((current) => !current)}
                             aria-label={`Switch to ${is24Hour ? '12-hour' : '24-hour'} time format`}
+                            aria-pressed={!is24Hour}
                             title={`Switch to ${is24Hour ? '12-hour' : '24-hour'} time format`}
                         >
                             {timeString}
@@ -70,7 +71,7 @@ const TimeMap = ({ location }: TimeMapProps) => {
                     allowFullScreen
                 />
             ) : <Skeleton className="h-60 w-full rounded-[10px]" />}
-        </div>
+        </section>
     )
 }
 

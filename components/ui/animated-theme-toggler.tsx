@@ -280,7 +280,7 @@ export const AnimatedThemeToggler = ({
       flushSync(applyTheme)
     })
     if (typeof transition?.finished?.finally === "function") {
-      transition.finished.finally(cleanup).catch(() => {})
+      transition.finished.finally(cleanup).catch(() => { })
     } else {
       cleanup()
     }
@@ -303,7 +303,7 @@ export const AnimatedThemeToggler = ({
           )
           activeAnimRef.current = anim
         })
-        .catch(() => {})
+        .catch(() => { })
     }
   }, [
     shape,
@@ -322,8 +322,10 @@ export const AnimatedThemeToggler = ({
       onClick={toggleTheme}
       className={cn(className)}
       {...props}
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      aria-pressed={isDark}
     >
-      {isDark ? <Sun /> : <Moon />}
+      {isDark ? <Sun aria-hidden="true" /> : <Moon aria-hidden="true" />}
       <span className="sr-only">Toggle theme</span>
     </button>
   )

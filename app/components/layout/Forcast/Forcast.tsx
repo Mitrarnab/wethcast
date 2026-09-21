@@ -36,7 +36,8 @@ const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, 
     const weatherIcon = `/icons/sky/${weather_code}${is_day}.png`
 
     return (
-        <div className=' w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
+        <section aria-labelledby="current-weather-heading" className='w-full grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
+            <h2 id="current-weather-heading" className="sr-only">Current weather</h2>
             <div className="md:col-start-1 md:col-end-3 xl:col-end-2 grid grid-cols-1 md:grid-cols-2 xl:block">
                 <div className="mb-4 flex flex-col items-center text-center md:items-start md:text-start md:mb-0">
                     <div className="flex items-start flex-col">
@@ -49,14 +50,14 @@ const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, 
                 </div>
                 <div className="grid grid-cols-2 text-center gap-1 xl:grid-cols-1">
                     <div className=" text-center xl:text-start xl:flex xl:flex-row xl:items-center xl:mt-6.5 xl:gap-2">
-                        <Image src={Images.sunrise} width={48} height={48} alt="sunrise icon" className="mx-auto xl:mx-0 filter invert dark:invert-0" />
+                        <Image src={Images.sunrise} width={48} height={48} alt="" aria-hidden="true" className="mx-auto xl:mx-0 filter invert dark:invert-0" />
                         <div>
                             <h4 className="font-bold text-[20px]">Sunrise</h4>
                             {sunrise}
                         </div>
                     </div>
                     <div className=" text-center xl:text-start xl:flex xl:flex-row xl:items-center xl:mt-3 xl:gap-2">
-                        <Image src={Images.sunset} width={48} height={48} alt="sunset icon" className="mx-auto xl:mx-0 filter invert dark:invert-0" />
+                        <Image src={Images.sunset} width={48} height={48} alt="" aria-hidden="true" className="mx-auto xl:mx-0 filter invert dark:invert-0" />
                         <div>
                             <h4 className="font-bold text-[20px]">Sunset</h4>
                             {sunset}
@@ -70,7 +71,7 @@ const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, 
                     width={270}
                     height={270}
                     sizes="(max-width: 768px) 70vw, 270px"
-                    alt={condition}
+                    alt={`${condition} weather condition`}
                     className="mx-auto mb-2.5"
                     onError={(event) => {
                         event.currentTarget.src = Images.sunny;
@@ -80,14 +81,14 @@ const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, 
             </div>
             <div className="grid grid-cols-2 gap-1">
                 <div className="text-center">
-                    <Image src={Images.humidity} width={58} height={58} alt="humidity icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <Image src={Images.humidity} width={58} height={58} alt="" aria-hidden="true" className="mx-auto mb-2.5 filter invert dark:invert-0" />
                     <div className="">
                         <h4 className="font-bold text-[20px]">{humidity}%</h4>
                         Humidity
                     </div>
                 </div>
                 <div className="text-center">
-                    <Image src={Images.speed} width={58} height={58} alt="speed icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <Image src={Images.speed} width={58} height={58} alt="" aria-hidden="true" className="mx-auto mb-2.5 filter invert dark:invert-0" />
                     <div className="">
                         <h4 className="font-bold text-[20px]">{wind_speed_10m}km/h</h4>
                         Wind Speed
@@ -95,7 +96,7 @@ const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, 
                 </div>
 
                 <div className="text-center">
-                    <Image src={Images.pressure} width={58} height={58} alt="pressure icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <Image src={Images.pressure} width={58} height={58} alt="" aria-hidden="true" className="mx-auto mb-2.5 filter invert dark:invert-0" />
                     <div className="">
                         <h4 className="font-bold text-[20px]">{pressure}hPa</h4>
                         Pressure
@@ -103,14 +104,14 @@ const Forcast = ({ is_day, temp_c, humidity, wind_speed_10m, condition, temp_f, 
                 </div>
 
                 <div className="text-center">
-                    <Image src={Images.uv} width={58} height={58} alt="uv icon" className="mx-auto mb-2.5 filter invert dark:invert-0" />
+                    <Image src={Images.uv} width={58} height={58} alt="" aria-hidden="true" className="mx-auto mb-2.5 filter invert dark:invert-0" />
                     <div className="">
                         <h4 className="font-bold text-[20px]">{uv}</h4>
                         uv
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

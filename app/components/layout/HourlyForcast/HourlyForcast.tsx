@@ -7,7 +7,7 @@ import type { HourlyForecastProps } from '@/app/lib/types'
 import { Skeleton } from '@/components/ui/skeleton'
 
 export const HourlyForecastSkeleton = () => (
-    <div className='w-full lg:max-w-xl xl:max-w-3xl py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
+    <section aria-label="Loading hourly forecast" className='w-full lg:max-w-xl xl:max-w-3xl py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
         <div className="flex items-center justify-between gap-3">
             <Skeleton className="h-10 w-10 rounded-full" />
             <Skeleton className="h-10 w-56" />
@@ -16,7 +16,7 @@ export const HourlyForecastSkeleton = () => (
         <div className="mt-3 flex gap-3 overflow-hidden pb-2">
             {Array.from({ length: 3 }, (_, index) => <Skeleton key={index} className="h-67.5 min-w-0 flex-1 rounded-[25px]" />)}
         </div>
-    </div>
+    </section>
 )
 
 const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
@@ -58,7 +58,7 @@ const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
     }
 
     return (
-        <div className='w-full lg:max-w-xl xl:max-w-3xl py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
+        <section aria-labelledby="hourly-forecast-heading" className='w-full lg:max-w-xl xl:max-w-3xl py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]'>
             <div className='flex items-center justify-between gap-3'>
                 <button
                     type='button'
@@ -69,7 +69,7 @@ const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
                 >
                     <ChevronLeft aria-hidden='true' />
                 </button>
-                <h2 className='text-center text-[32px] font-bold'>Hourly Forecast</h2>
+                <h2 id="hourly-forecast-heading" className='text-center text-[32px] font-bold'>Hourly Forecast</h2>
                 <button
                     type='button'
                     onClick={() => moveSlider(1)}
@@ -81,19 +81,19 @@ const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
                 </button>
             </div>
             <div className='mt-3'>
-                <div className="flex gap-3 overflow-x-auto pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                <div className="scrollbar-none flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
                     {visibleHours.map((hour, index) => (
                         <div
                             key={hour.time}
                             ref={(element) => { cardRefs.current[index] = element }}
-                            className='min-w-0 flex-[0_0_calc((100%_-_1.5rem)_/_3)] lg:flex-[0_0_calc((100%_-_3rem)_/_5)]'
+                            className='min-w-0 flex-[0_0_calc((100%-1.5rem)/3)] lg:flex-[0_0_calc((100%-3rem)/5)]'
                         >
                             <HourCard hour={hour} unit={unit} />
                         </div>
                     ))}
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 

@@ -26,7 +26,6 @@ export default function Home() {
         return data;
       })
       .then((defaultLocation) => {
-        console.log("Geocode response:", defaultLocation);
         if (defaultLocation) setLocation(defaultLocation);
       })
       .catch((error) => {
@@ -45,7 +44,6 @@ export default function Home() {
       })
       .then((data) => {
         setWeather(data);
-        console.log("Complete weather API response:", data);
       })
       .catch((error) => {
         setWeather(null);
@@ -61,7 +59,8 @@ export default function Home() {
   return (
     <>
       <Header onLocationFound={setLocation} />
-      <main className="px-4 lg:px-2">
+      <main aria-labelledby="dashboard-heading" className="px-4 lg:px-2">
+        <h1 id="dashboard-heading" className="sr-only">Local weather forecast</h1>
         <section className="flex flex-col-reverse lg:flex-row max-w-7xl mx-auto gap-6 lg:gap-12.5 items-stretch">
           <TimeMap location={location} />
           {weatherForLocation !== null ? <Forcast {...weatherForLocation.current} unit={unit} onUnitChange={setUnit} /> : <ForecastSkeleton />}

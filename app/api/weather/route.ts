@@ -134,7 +134,6 @@ export async function GET(request: NextRequest) {
     const daily = weatherData.forecast.forecastday;
     const hourly = daily.flatMap(({ hour }) => hour);
 
-    // 3. Combine and return
     return NextResponse.json({
       location: {
         name: display_name,

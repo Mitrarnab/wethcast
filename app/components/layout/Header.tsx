@@ -76,7 +76,7 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
 
     return (
         <header className="w-full mx-auto max-w-7xl px-4 py-4">
-            <nav className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+            <nav aria-label="Primary navigation" className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
                 <Link href="/" className="flex items-center self-start mr-auto">
                     <Image src={Images.logo} alt="WeathCast logo" width={52} height={52} priority className="h-13 w-13" />
                     <div className="ml-2 flex flex-col font-semibold">
@@ -91,15 +91,16 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
                 {showLocationControls && (
                     <>
                         <div className="lg:mr-2.5 my-2.5 lg:my-0">
-                            <form onSubmit={searchLocation} className="relative h-15.5 w-full md:min-w-md xl:min-w-lg md:flex-1 border border-black dark:border-0 py-2 px-3 sm:px-4 flex items-center bg-muted text-muted-foreground rounded-[40px] shadow-[0px_4px_40px_0px_rgba(0,0,0,0.25)]">
+                            <form role="search" aria-label="Search for a location" onSubmit={searchLocation} className="relative h-15.5 w-full md:min-w-md xl:min-w-lg md:flex-1 border border-black dark:border-0 py-2 px-3 sm:px-4 flex items-center bg-muted text-muted-foreground rounded-[40px] shadow-[0px_4px_40px_0px_rgba(0,0,0,0.25)]">
                                 <button
                                     type="submit"
                                     aria-label="Search location"
                                     disabled={isSearching}
                                     className="cursor-pointer disabled:cursor-wait shrink-0"
                                 >
-                                    <Search className='h-6 w-6 sm:h-8 sm:w-8' />
+                                    <Search aria-hidden="true" className='h-6 w-6 sm:h-8 sm:w-8' />
                                 </button>
+                                <label htmlFor="search-input" className="sr-only">Search for a city or place</label>
                                 <input
                                     id="search-input"
                                     value={query}
@@ -118,7 +119,7 @@ const Header = ({ onLocationFound, showLocationControls = true }: HeaderProps) =
                             disabled={isLocating}
                             className="lg:mr-2.5 w-full cursor-pointer text-black dark:text-white flex items-center justify-center bg-[#d9d9d9] dark:bg-[#444] rounded-[40px] py-2 px-3 sm:px-4 shadow-[0px_4px_40px_0px_rgba(0,0,0,0.25)] disabled:opacity-60 md:w-auto"
                         >
-                            <LocateFixed className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                            <LocateFixed aria-hidden="true" className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                             <span className="font-extrabold text-sm sm:text-xl tracking-wide whitespace-nowrap">
                                 {isLocating ? 'Locating…' : 'Current Location'}
                             </span>

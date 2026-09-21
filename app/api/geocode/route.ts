@@ -1,4 +1,3 @@
-// app/api/geocode/route.ts
 import { NextResponse } from "next/server";
 import { find as findTimezone } from "geo-tz";
 
