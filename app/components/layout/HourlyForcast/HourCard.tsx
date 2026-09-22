@@ -12,7 +12,7 @@ const HourCard = ({ hour, unit }: HourCardProps) => {
                 src={weatherIcon}
                 width={80}
                 height={80}
-                alt="Hourley forcast"
+                alt={`Weather condition at ${hour.time}`}
                 className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] mx-auto"
             />
             <div className="text-[20px]">{unit === 'C' ? hour.temp_c : hour.temp_f}°{unit}</div>

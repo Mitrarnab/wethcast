@@ -41,7 +41,10 @@ const TimeMap = ({ location }: TimeMapProps) => {
                 <div className=" mb-4 md:mb-0">
                     {location ? <h1 className="text-2xl font-bold text-center truncate">{primaryName?.trim()}</h1> : <Skeleton className="mx-auto h-8 w-40" />}
                     {secondaryName && (
-                        <span className="block text-xs text-center text-muted-foreground truncate">
+                        <span
+                            className="block max-w-56 truncate text-center text-xs text-muted-foreground"
+                            title={secondaryName}
+                        >
                             {secondaryName}
                         </span>
                     )}

@@ -48,7 +48,7 @@ interface WeatherApiResponse {
 
 export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("q");
+  const query = searchParams.get("q")?.trim();
   const latitude = searchParams.get("latitude");
   const longitude = searchParams.get("longitude");
 
@@ -57,6 +57,32 @@ export async function GET(request: NextRequest) {
       { error: 'Provide "q" or both "latitude" and "longitude" parameters' },
       { status: 400 },
     );
+  }
+
+  if (query && query.length > 120) {
+    return NextResponse.json(
+      { error: "Location query is too long." },
+      { status: 400 },
+    );
+  }
+
+  if (latitude || longitude) {
+    const parsedLatitude = Number(latitude);
+    const parsedLongitude = Number(longitude);
+
+    if (
+      !Number.isFinite(parsedLatitude) ||
+      !Number.isFinite(parsedLongitude) ||
+      parsedLatitude < -90 ||
+      parsedLatitude > 90 ||
+      parsedLongitude < -180 ||
+      parsedLongitude > 180
+    ) {
+      return NextResponse.json(
+        { error: "Coordinates are outside the valid range." },
+        { status: 400 },
+      );
+    }
   }
 
   try {
@@ -69,7 +95,10 @@ export async function GET(request: NextRequest) {
         `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(
           query!,
         )}&format=json&limit=1`,
-        { headers: { "User-Agent": "WeathCast/1.0" } },
+        {
+          headers: { "User-Agent": "WeathCast/1.0" },
+          next: { revalidate: 3600 },
+        },
       );
 
       if (!geoRes.ok) {
@@ -103,6 +132,7 @@ export async function GET(request: NextRequest) {
     const area = `${lat},${lon}`;
     const weatherRes = await fetch(
       `https://api.weatherapi.com/v1/forecast.json?key=${encodeURIComponent(apiKey)}&q=${encodeURIComponent(area)}&aqi=yes&alerts=yes&days=2`,
+      { next: { revalidate: 600 } },
     );
 
     const weatherData: WeatherApiResponse = await weatherRes.json();
