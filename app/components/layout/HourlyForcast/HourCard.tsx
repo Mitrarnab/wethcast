@@ -13,18 +13,21 @@ const HourCard = ({ hour, unit }: HourCardProps) => {
                 width={80}
                 height={80}
                 alt="Hourley forcast"
-                className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] mx-auto mb-2.5"
-            /> <div className="text-[20px]">{unit === 'C' ? hour.temp_c : hour.temp_f}°{unit}</div>
+                className="drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] mx-auto"
+            />
+            <div className="text-[20px]">{unit === 'C' ? hour.temp_c : hour.temp_f}°{unit}</div>
             <Image
                 width={55}
                 height={55}
-                alt=''
+                alt='wind direction'
                 aria-hidden="true"
                 src={Images.navigation}
                 className='drop-shadow-[0_4px_4px_rgba(0,0,0,0.25)] mx-auto'
                 style={{ transform: `rotate(${rotation}deg)` }}
             />
-            <div className="text-[20px]">{hour.wind_kph} km/h</div>
+            <div className="text-center">{hour.wind_kph}
+                <div>km/h</div>
+            </div>
         </article>
     )
 }

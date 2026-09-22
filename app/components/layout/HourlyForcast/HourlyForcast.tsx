@@ -69,7 +69,7 @@ const HourlyForcast = ({ hourly, timezone, unit }: HourlyForecastProps) => {
                 >
                     <ChevronLeft aria-hidden='true' />
                 </button>
-                <h2 id="hourly-forecast-heading" className='text-center text-[32px] font-bold'>Hourly Forecast</h2>
+                <h2 id="hourly-forecast-heading" className='text-center text-[22px] md:text-[32px] font-bold'>Hourly Forecast</h2>
                 <button
                     type='button'
                     onClick={() => moveSlider(1)}
