@@ -94,7 +94,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={cn("", "antialiased", poppins.variable, "font-sans")}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-screen flex flex-col">
         {children}
         <Toaster position="top-right" />
       </body>

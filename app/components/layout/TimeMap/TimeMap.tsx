@@ -37,8 +37,8 @@ const TimeMap = ({ location }: TimeMapProps) => {
 
     return (
         <section aria-label={location ? `Local time and map for ${location.name}` : 'Local time and map'} className="flex flex-col lg:max-w-md w-full py-4 px-5 bg-[#d9d9d9] dark:bg-[#444] text-[#292929] dark:text-white rounded-[30px] shadow-[10px_10px_4px_0px_rgba(0,0,0,0.5)]">
-            <div className="flex flex-col md:flex-row justify-around items-center mb-4">
-                <div className=" ">
+            <div className="flex flex-col  md:flex-row justify-around items-center mb-4">
+                <div className=" mb-4 md:mb-0">
                     {location ? <h1 className="text-2xl font-bold text-center truncate">{primaryName?.trim()}</h1> : <Skeleton className="mx-auto h-8 w-40" />}
                     {secondaryName && (
                         <span className="block text-xs text-center text-muted-foreground truncate">
