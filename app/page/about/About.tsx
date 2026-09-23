@@ -30,7 +30,7 @@ const About = () => {
                     <article className="rounded-[25px] border border-black/10 bg-white/70 p-6 shadow-sm dark:border-white/10 dark:bg-white/5 md:col-span-2">
                         <h3 className="text-2xl font-bold">Map and coordinates</h3>
                         <p className="mt-4 text-sm leading-7 sm:text-base">
-                            The latitude and longitude for searched places and current locations come from <a href='https://nominatim.org/' target='_blank' rel='noopener noreferrer' className='font-bold'>OpenStreetMap Nominatim</a>. The map in the dashboard is then populated with an embedded map from <a href='https://www.openstreetmap.org/' target='_blank' rel='noopener noreferrer' className='font-bold'>OpenStreetMap</a>, centered on those coordinates. WeathCast also uses the coordinates to determine the location&apos;s timezone.
+                            The latitude and longitude for searched places and current locations come from <a href='https://nominatim.org/' target='_blank' rel='noopener noreferrer' className='font-bold'>OpenStreetMap Nominatim</a>. The map in the dashboard is then populated with an embedded map from <a href='https://www.openstreetmap.org/' target='_blank' rel='noopener noreferrer' className='font-bold'>OpenStreetMap</a>, centered on those coordinates. WeathCast also uses the coordinates to determine the location's timezone.
                         </p>
                     </article>
                 </div>
@@ -41,7 +41,7 @@ const About = () => {
                 <dl className="grid gap-6 md:grid-cols-3">
                     <div className="rounded-[25px] border border-black/10 bg-white/70 p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
                         <dt className="text-xl font-bold">Temperature toggle</dt>
-                        <dd className="mt-3 text-sm leading-7">The Celsius/Fahrenheit control in the main forecast card changes every temperature across the page, including current, hourly, and tomorrow&apos;s values.</dd>
+                        <dd className="mt-3 text-sm leading-7">The Celsius/Fahrenheit control in the main forecast card changes every temperature across the page, including current, hourly, and tomorrow's values.</dd>
                     </div>
                     <div className="rounded-[25px] border border-black/10 bg-white/70 p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
                         <dt className="text-xl font-bold">24-hour time</dt>
@@ -58,7 +58,7 @@ const About = () => {
                 <h2 id="forecast" className="mb-4 text-3xl font-bold">Reading the forecast</h2>
                 <div className="rounded-[25px] border border-black/10 bg-white/70 p-6 shadow-sm dark:border-white/10 dark:bg-white/5">
                     <p className="text-sm leading-7 sm:text-base">
-                        The current forecast includes temperature, feels-like temperature, condition, humidity, wind, pressure, UV index, sunrise, and sunset. The hourly forecast shows changing conditions throughout the next day, while the tomorrow panel summarizes the next day&apos;s average temperature and daylight times.
+                        The current forecast includes temperature, feels-like temperature, condition, humidity, wind, pressure, UV index, sunrise, and sunset. The hourly forecast shows changing conditions throughout the next day, while the tomorrow panel summarizes the next day's average temperature and daylight times.
                     </p>
                     <p className="mt-4 text-sm leading-7 sm:text-base">
                         Weather information comes from <a target='_blank' rel='noopener noreferrer' href='https://www.weatherapi.com/' className='font-bold'>WeatherAPI.com</a> through the WeathCast weather route. The API key stays on the server, and the browser receives only the forecast data needed to render the dashboard.
